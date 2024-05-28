@@ -1,7 +1,8 @@
 package com.rudderlabs.android.sample.kotlin
 
 import android.app.Application
-import com.rudderstack.android.integration.localytics.LocalyticsIntegrationFactory
+import com.rudderlabs.android.sample.kotlin.BuildConfig
+import com.rudderstack.android.integration.customerio.CustomerIOIntegrationFactory
 import com.rudderstack.android.sdk.core.RudderClient
 import com.rudderstack.android.sdk.core.RudderConfig
 import com.rudderstack.android.sdk.core.RudderLogger
@@ -15,11 +16,14 @@ class MainApplication : Application() {
         super.onCreate()
         rudderClient = RudderClient.getInstance(
             this,
-            "1TSRSskqa15PG7F89tkwEbl5Td8",
+            BuildConfig.WRITE_KEY,
             RudderConfig.Builder()
-                .withDataPlaneUrl("https://7866cc22.ngrok.io")
-                .withLogLevel(RudderLogger.RudderLogLevel.DEBUG)
-                .withFactory(LocalyticsIntegrationFactory.FACTORY)
+                .withDataPlaneUrl(BuildConfig.DATA_PLANE_URL)
+                .withLogLevel(RudderLogger.RudderLogLevel.VERBOSE)
+                .withFactory(CustomerIOIntegrationFactory.FACTORY)
+                .withTrackLifecycleEvents(false)
+                .withRecordScreenViews(false)
+                .withSleepCount(3)
                 .build()
         )
     }

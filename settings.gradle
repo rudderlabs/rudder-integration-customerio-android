@@ -1,1 +1,1 @@
-include ':sample-kotlin', ':localytics'
+include ':sample-kotlin', ':customerio'

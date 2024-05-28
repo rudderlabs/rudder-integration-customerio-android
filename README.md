@@ -1,40 +1,43 @@
 # What is RudderStack?
 
-**Short answer:** 
-RudderStack is an open-source Segment alternative written in Go, built for the enterprise. .
+[RudderStack](https://rudderstack.com/) is a **customer data pipeline** tool for collecting, routing and processing data from your websites, apps, cloud tools, and data warehouse.
 
-**Long answer:** 
-RudderStack is a platform for collecting, storing and routing customer event data to dozens of tools. Rudder is open-source, can run in your cloud environment (AWS, GCP, Azure or even your data-centre) and provides a powerful transformation framework to process your event data on the fly.
+More information on RudderStack can be found [here](https://github.com/rudderlabs/rudder-server).
 
-## Getting Started with Localytics Integration of Android SDK
-1. Add [Localytics](https://localytics.google.com) as a destination in the [Dashboard](https://app.rudderlabs.com/)
+## Integrating Customer IO with RudderStack's Android SDK
 
-2. Add these lines to your ```app/build.gradle```
+1. Add [Customer IO](https://www.customerio.com) as a destination in the [Dashboard](https://app.rudderstack.com/) and define ```apiToken```
+
+2. Add the dependency under ```dependencies```
 ```
-repositories {
-  maven { url "https://dl.bintray.com/rudderstack/rudderstack" }
-}
+implementation 'com.rudderstack.android.sdk:core:[1.0,2.0)'
+implementation 'com.rudderstack.android.integration:customerio:1.0.0'
 ```
-3. Add the dependency under ```dependencies```
+
+3. Add required permissions to ```AndroidManifest.xml```
 ```
-implementation 'com.rudderstack.android.sdk:core:1.0.1'
-implementation 'com.rudderstack.android.integration:localytics:0.1.1'
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
 ## Initialize ```RudderClient```
+
 ```
 val rudderClient: RudderClient = RudderClient.getInstance(
     this,
     <WRITE_KEY>,
     RudderConfig.Builder()
         .withDataPlaneUrl(<DATA_PLANE_URL>)
-        .withFactory(LocalyticsIntegrationFactory.FACTORY)
+        .withLogLevel(RudderLogger.RudderLogLevel.DEBUG)
+        .withFactory(CustomerIOIntegrationFactory.FACTORY)
         .build()
 )
 ```
 
 ## Send Events
-Follow the steps from [Rudder Android SDK](https://github.com/rudderlabs/rudder-sdk-android)
+
+Follow the steps from the [RudderStack Android SDK](https://github.com/rudderlabs/rudder-sdk-android).
 
 ## Contact Us
-If you come across any issues while configuring or using RudderStack, please feel free to [contact us](https://rudderstack.com/contact/) or start a conversation on our [Slack](https://resources.rudderstack.com/join-rudderstack-slack) channel. We will be happy to help you.
+
+If you come across any issues while configuring or using this integration, please feel free to start a conversation on our [Slack](https://resources.rudderstack.com/join-rudderstack-slack) channel. We will be happy to help you.
