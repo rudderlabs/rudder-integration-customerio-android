@@ -23,15 +23,15 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIO> 
     private static final String CUSTOMER_IO_KEY = "Customer IO";
 
     // Config Field constants
-    public static final String API_KEY = "apiKey";
-    public static final String SITE_ID = "siteId";
-    public static final String AUTO_TRACK_DEVICE_ATTRIBUTES = "autoTrackDeviceAttributes";
-    public static final String BACKGROUND_QUEUE_MIN_NUMBER_OF_TASKS = "backgroundQueueMinNumberOfTasks";
-    public static final String BACKGROUND_QUEUE_SECONDS_DELAY = "backgroundQueueSecondsDelay";
-    public static final String REGION = "region";
-    public static final String AUTO_TRACK_SCREEN_VIEWS = "autoTrackScreenViews";
-    public static final String TRACK_APPLICATION_LIFECYCLE_EVENTS = "trackApplicationLifecycleEvents";
-    public static final String LOG_LEVEL = "logLevel";
+    private static final String API_KEY = "apiKey";
+    private static final String SITE_ID = "siteId";
+    private static final String AUTO_TRACK_DEVICE_ATTRIBUTES = "autoTrackDeviceAttributes";
+    private static final String BACKGROUND_QUEUE_MIN_NUMBER_OF_TASKS = "backgroundQueueMinNumberOfTasks";
+    private static final String BACKGROUND_QUEUE_SECONDS_DELAY = "backgroundQueueSecondsDelay";
+    private static final String DATA_CENTER = "datacenter";
+    private static final String AUTO_TRACK_SCREEN_VIEWS = "autoTrackScreenViews";
+    private static final String TRACK_APPLICATION_LIFECYCLE_EVENTS = "trackApplicationLifecycleEvents";
+    private static final String LOG_LEVEL = "logLevel";
 
     // customerio instance
     private CustomerIO customerIO;
@@ -78,8 +78,8 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIO> 
 
             // get apiKey and return if null or blank
             Region region = Region.US.INSTANCE;
-            if (destinationConfig.containsKey(REGION)) {
-                String regionStr = (String) destinationConfig.get(REGION);
+            if (destinationConfig.containsKey(DATA_CENTER)) {
+                String regionStr = (String) destinationConfig.get(DATA_CENTER);
                 if (!TextUtils.isEmpty(regionStr)) {
                     if (regionStr.equalsIgnoreCase("eu")) {
                         region = Region.EU.INSTANCE;

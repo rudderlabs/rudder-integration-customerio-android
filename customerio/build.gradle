@@ -4,7 +4,7 @@ android {
     compileSdkVersion 34
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 34
         buildConfigField("String", "VERSION_NAME", "\"${VERSION_NAME}\"")
     }
@@ -16,8 +16,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     namespace 'com.rudderstack.android.integration.customerio'
 }
@@ -30,9 +30,7 @@ dependencies {
     compileOnly 'com.rudderstack.android.sdk:core:[1.12,2.0)'
     // Customer IO SDK
     implementation 'io.customer.android:tracking:3.10.0'
-    implementation 'io.customer.android:messaging-push-fcm:3.10.0'
 
-    implementation 'com.google.code.gson:gson:2.11.0'
     testImplementation 'com.android.support.test:rules:1.0.2'
     testImplementation 'com.android.support.test:runner:1.0.2'
     testImplementation "org.robolectric:robolectric:4.3"

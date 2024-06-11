@@ -23,15 +23,15 @@ android {
 
     defaultConfig {
         applicationId "com.rudderlabs.android.rudderlabs.rudderlabstest"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "DATA_PLANE_URL", properties.getProperty('dataplaneUrl', 'https://api.rudderstack.com'))
-        buildConfigField("String", "CONTROL_PLANE_URL", properties.getProperty('controlplaneUrl', 'https://api.rudderstack.com'))
-        buildConfigField("String", "WRITE_KEY", properties.getProperty('writeKey', ''))
+        buildConfigField("String", "DATA_PLANE_URL", properties.getProperty('dataplaneUrl', '"https://api.rudderstack.com"'))
+        buildConfigField("String", "CONTROL_PLANE_URL", properties.getProperty('controlplaneUrl', '"https://api.rudderstack.com"'))
+        buildConfigField("String", "WRITE_KEY", properties.getProperty('writeKey', '"2gp9A411PM3KJmxgqwiGljWhdX7"'))
     }
     buildTypes {
         release {
@@ -41,8 +41,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     namespace 'com.rudderlabs.android.sample.kotlin'
 }

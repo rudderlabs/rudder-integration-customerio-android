@@ -20,12 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.adjust.sdk.plugin.MacAddressUtil {
-    java.lang.String getMacAddress(android.content.Context);
-}
--keep class com.adjust.sdk.plugin.AndroidIdUtil {
-    java.lang.String getAndroidId(android.content.Context);
-}
 -keep class com.google.android.gms.common.ConnectionResult {
     int SUCCESS;
 }
