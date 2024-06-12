@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.rudderlabs.android.sample.kotlin.MainApplication.Companion.rudderClient
-import com.rudderstack.android.sdk.core.*
-import java.util.*
+import com.rudderstack.android.sdk.core.RudderOption
+import com.rudderstack.android.sdk.core.RudderProperty
+import com.rudderstack.android.sdk.core.RudderTraits
+import java.util.Date
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

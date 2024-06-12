@@ -16,8 +16,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     namespace 'com.rudderstack.android.integration.customerio'
 }
@@ -30,16 +30,7 @@ dependencies {
     compileOnly 'com.rudderstack.android.sdk:core:[1.12,2.0)'
     // Customer IO SDK
     implementation 'io.customer.android:tracking:3.10.0'
-
-    testImplementation 'com.android.support.test:rules:1.0.2'
-    testImplementation 'com.android.support.test:runner:1.0.2'
-    testImplementation "org.robolectric:robolectric:4.3"
-    testImplementation "androidx.test:core-ktx:1.5.0"
-    testImplementation "org.hamcrest:hamcrest:2.2"
-    testImplementation 'com.rudderstack.android.sdk:core:[1.12,2.0)'
 }
-
-
 
 
 apply from: rootProject.file('gradle/mvn-publish.gradle')
