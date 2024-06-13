@@ -16,9 +16,9 @@ jobs:
         id: check-outdated-dependencies-and-create-issue
         uses: rudderlabs/github-action-updated-dependencies-notifier@main
         with:
-          outdated-dependency-names: "com.kochava.base:tracker"
-          directory: "kochava/build.gradle"
-          title: "fix: update Kochava SDK to the latest version"
+          outdated-dependency-names: "io.customer.android:tracking"
+          directory: "customerio/build.gradle"
+          title: "fix: update CustomerIO SDK to the latest version"
           assignee: "@rudderlabs/sdk-android"
           labels: "outdatedDependency"
           color: "FBCA04"

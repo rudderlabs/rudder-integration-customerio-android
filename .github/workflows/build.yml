@@ -17,7 +17,7 @@ jobs:
         with:
           workflow_id: ${{ github.event.workflow.id }}
 
-  kochava-test:
+  customerio-test:
     needs: cancel_previous
     runs-on: ubuntu-latest
 
@@ -38,10 +38,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-core-
       - name: Run Tests
-        run: ./gradlew kochava:test
+        run: ./gradlew customerio:test
 
       - name: Generate coverage report
-        run: ./gradlew kochava:codeCoverageReport
+        run: ./gradlew customerio:codeCoverageReport
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
