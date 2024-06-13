@@ -44,7 +44,7 @@ jobs:
         run: ./gradlew customerio:codeCoverageReport
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v4
 
 #  android-test:
 #    needs: cancel_previous
@@ -68,7 +68,7 @@ jobs:
 #      - name: Generate coverage report
 #        run: ./gradlew android:codeCoverageReport
 #      - name: Upload coverage to Codecov
-#        uses: codecov/codecov-action@v2
+#        uses: codecov/codecov-action@v4
 
 #  security:
 #    needs: cancel_previous
