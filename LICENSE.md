@@ -1,6 +1,6 @@
 ### Elastic License 2.0 (ELv2) ###
 
-## Acceptance ##
+## Acceptance ## 
 By using the software, you agree to all of the terms and conditions below.
 
 ## Copyright License ## 
@@ -13,7 +13,7 @@ You may not move, change, disable, or circumvent the license key functionality i
 
 You may not alter, remove, or obscure any licensing, copyright, or other notices of the licensor in the software. Any use of the licensor’s trademarks is subject to applicable law.
 
-## Patents ## 
+## Patents ##
 The licensor grants you a license, under any patent claims the licensor can license, or becomes able to license, to make, have made, use, sell, offer for sale, import and have imported the software, in each case subject to the limitations and conditions in this license. This license does not cover any patent claims that you cause to be infringed by modifications or additions to the software. If you or your company make any written claim that the software infringes or contributes to infringement of any patent, your patent license for the software granted under these terms ends immediately. If your company makes such a claim, your patent license ends immediately for work on behalf of your company.
 
 ## Notices ## 
@@ -30,7 +30,7 @@ If you use the software in violation of these terms, such use is not licensed, a
 ## No Liability ## 
 As far as the law allows, the software comes as is, without any warranty or condition, and the licensor will not be liable to you for any damages arising out of these terms or the use or nature of the software, under any kind of legal claim.
 
-## Definitions ##
+## Definitions ## 
 The *licensor* is the entity offering these terms, and the *software* is the software the licensor makes available under these terms, including any portion of it.
 
 *you* refers to the individual or entity agreeing to these terms.
