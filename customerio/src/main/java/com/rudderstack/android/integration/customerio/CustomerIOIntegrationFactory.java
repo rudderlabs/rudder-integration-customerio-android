@@ -92,7 +92,7 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIO> 
 
             // customer.io builder object
             CustomerIO.Builder builder = new CustomerIO.Builder(
-                    apiKey, siteId, region, RudderClient.getApplication(), extraConfig
+                    siteId, apiKey, region, RudderClient.getApplication(), extraConfig
             );
 
             // get autoTrackDeviceAttributes
