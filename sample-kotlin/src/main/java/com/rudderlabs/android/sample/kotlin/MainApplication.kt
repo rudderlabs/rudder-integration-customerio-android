@@ -19,7 +19,6 @@ class MainApplication : Application() {
             BuildConfig.WRITE_KEY,
             RudderConfig.Builder()
                 .withDataPlaneUrl(BuildConfig.DATA_PLANE_URL)
-                .withControlPlaneUrl("https://69f7-2405-201-8025-58f8-8c03-fbbc-e2f9-595a.ngrok-free.app")
                 .withLogLevel(RudderLogger.RudderLogLevel.VERBOSE)
                 .withFactory(CustomerIOIntegrationFactory.FACTORY)
                 .withTrackLifecycleEvents(false)
