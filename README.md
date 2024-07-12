@@ -11,7 +11,7 @@ More information on RudderStack can be found [here](https://github.com/rudderlab
 2. Add the dependency under ```dependencies```
 ```
 implementation 'com.rudderstack.android.sdk:core:[1.0,2.0)'
-implementation 'com.rudderstack.android.integration:customerio:1.0.0'
+implementation 'com.rudderstack.android.integration:customerio:1.0.1'
 ```
 
 3. Add required permissions to ```AndroidManifest.xml```
