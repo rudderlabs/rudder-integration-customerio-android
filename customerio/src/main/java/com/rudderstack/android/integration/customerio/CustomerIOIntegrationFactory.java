@@ -27,13 +27,7 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIOIn
     private static final String API_KEY = "apiKey";
     private static final String SITE_ID = "siteID";
     private static final String AUTO_TRACK_DEVICE_ATTRIBUTES = "autoTrackDeviceAttributes";
-    private static final String BACKGROUND_QUEUE_MIN_NUMBER_OF_TASKS = "backgroundQueueMinNumberOfTasks";
-    private static final String BACKGROUND_QUEUE_SECONDS_DELAY = "backgroundQueueSecondsDelay";
     private static final String DATA_CENTER = "datacenter";
-    private static final String TRACK_APPLICATION_LIFECYCLE_EVENTS = "trackApplicationLifecycleEvents";
-
-//     customerio instance
-//    private CustomerIO customerIO;
 
     private String siteId = null;
     private CustomerIOBuilder customerIOBuilder = null;
@@ -107,48 +101,8 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIOIn
             // auto record screen views
             this.customerIOBuilder.autoTrackActivityScreens(rudderConfig.isRecordScreenViews());
 
-//            /////////////////////////////////////////////////////////////////////
-//            Removed in Version 4.2.0 onwards
-//            /////////////////////////////////////////////////////////////////////
-//            // extra config
-//            Map<String, Object> extraConfig = new HashMap<>();
-//            // extra configs from the SDK config
-//            extraConfig.put(TRACK_APPLICATION_LIFECYCLE_EVENTS, rudderConfig.isTrackLifecycleEvents());
-//            // get backgroundQueueMinNumberOfTasks
-//            int backgroundQueueMinNumberOfTasks = 10;
-//            if (destinationConfig.containsKey(BACKGROUND_QUEUE_MIN_NUMBER_OF_TASKS)) {
-//                String backgroundQueueMinNumberOfTasksStr = (String) destinationConfig.get(
-//                        BACKGROUND_QUEUE_MIN_NUMBER_OF_TASKS);
-//                if (!TextUtils.isEmpty(backgroundQueueMinNumberOfTasksStr)) {
-//                    try {
-//                        backgroundQueueMinNumberOfTasks = Integer.parseInt(
-//                                backgroundQueueMinNumberOfTasksStr);
-//                    } catch (NumberFormatException e) {
-//                        RudderLogger.logWarn("Invalid Number format. Reverting to default value");
-//                    }
-//                }
-//            }
-//            builder.setBackgroundQueueMinNumberOfTasks(backgroundQueueMinNumberOfTasks);
-//
-//            // get backgroundQueueSecondsDelay
-//            double backgroundQueueSecondsDelay = 30.0;
-//            if (destinationConfig.containsKey(BACKGROUND_QUEUE_SECONDS_DELAY)) {
-//                String backgroundQueueSecondsDelayStr = (String) destinationConfig.get(
-//                        BACKGROUND_QUEUE_SECONDS_DELAY);
-//                if (!TextUtils.isEmpty(backgroundQueueSecondsDelayStr)) {
-//                    try {
-//                        backgroundQueueSecondsDelay = Double.parseDouble(
-//                                backgroundQueueSecondsDelayStr);
-//                    } catch (NumberFormatException e) {
-//                        RudderLogger.logWarn("Invalid Number format. Reverting to default value");
-//                    }
-//                }
-//            }
-//            builder.setBackgroundQueueSecondsDelay(backgroundQueueSecondsDelay);
-
-
             // do not build. let the developer build after adding the fcm and in-app module
-//            this.customerIO = builder.build();
+
             RudderLogger.logInfo("Configured Customer IO + Rudder integration builder created. initialize customer.io by calling builder.build()");
         }
     }
