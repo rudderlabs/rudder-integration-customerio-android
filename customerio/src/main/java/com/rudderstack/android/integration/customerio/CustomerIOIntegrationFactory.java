@@ -11,14 +11,14 @@ import com.rudderstack.android.sdk.core.RudderIntegration;
 import com.rudderstack.android.sdk.core.RudderLogger;
 import com.rudderstack.android.sdk.core.RudderMessage;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import io.customer.sdk.CustomerIO;
+import io.customer.sdk.CustomerIOBuilder;
+import io.customer.sdk.core.util.CioLogLevel;
 import io.customer.sdk.data.model.Region;
-import io.customer.sdk.util.CioLogLevel;
 
-public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIO> {
+public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIOIntegrationFactory> {
 
     // String constants
     private static final String CUSTOMER_IO_KEY = "Customer IO";
@@ -27,13 +27,11 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIO> 
     private static final String API_KEY = "apiKey";
     private static final String SITE_ID = "siteID";
     private static final String AUTO_TRACK_DEVICE_ATTRIBUTES = "autoTrackDeviceAttributes";
-    private static final String BACKGROUND_QUEUE_MIN_NUMBER_OF_TASKS = "backgroundQueueMinNumberOfTasks";
-    private static final String BACKGROUND_QUEUE_SECONDS_DELAY = "backgroundQueueSecondsDelay";
     private static final String DATA_CENTER = "datacenter";
-    private static final String TRACK_APPLICATION_LIFECYCLE_EVENTS = "trackApplicationLifecycleEvents";
 
-    // customerio instance
-    private CustomerIO customerIO;
+    private String siteId = null;
+    private CustomerIOBuilder customerIOBuilder = null;
+    private Region region = Region.US.INSTANCE;
 
     // Factory initialization
     public static final Factory FACTORY = new Factory() {
@@ -56,11 +54,10 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIO> 
             RudderLogger.logError("RudderClient is not initialized correctly. Application is null. Aborting CustomerIO initialization.");
         } else {
             // get siteId and return if null or blank
-            String siteId = "";
             if (destinationConfig.containsKey(SITE_ID)) {
-                siteId = (String) destinationConfig.get(SITE_ID);
+                this.siteId = (String) destinationConfig.get(SITE_ID);
             }
-            if (TextUtils.isEmpty(siteId)) {
+            if (TextUtils.isEmpty(this.siteId)) {
                 RudderLogger.logError("Invalid siteId. Aborting CustomerIO initialization");
                 return;
             }
@@ -75,74 +72,38 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIO> 
             }
 
             // get region
-            Region region = Region.US.INSTANCE;
             if (destinationConfig.containsKey(DATA_CENTER)) {
                 String regionStr = (String) destinationConfig.get(DATA_CENTER);
                 if (!TextUtils.isEmpty(regionStr)) {
                     if (regionStr.equalsIgnoreCase("eu")) {
-                        region = Region.EU.INSTANCE;
+                        this.region = Region.EU.INSTANCE;
                     }
                 }
             }
 
-            // extra config
-            Map<String, Object> extraConfig = new HashMap<>();
-            // extra configs from the SDK config
-            extraConfig.put(TRACK_APPLICATION_LIFECYCLE_EVENTS, rudderConfig.isTrackLifecycleEvents());
-
             // customer.io builder object
-            CustomerIO.Builder builder = new CustomerIO.Builder(
-                    siteId, apiKey, region, RudderClient.getApplication(), extraConfig
+            this.customerIOBuilder = new CustomerIOBuilder(
+                    RudderClient.getApplication(), apiKey
             );
+
+            customerIOBuilder.region(this.region);
 
             // get autoTrackDeviceAttributes
             boolean autoTrackDeviceAttributes = true;
             if (destinationConfig.containsKey(AUTO_TRACK_DEVICE_ATTRIBUTES)) {
                 autoTrackDeviceAttributes = Boolean.getBoolean(AUTO_TRACK_DEVICE_ATTRIBUTES);
             }
-            builder.autoTrackDeviceAttributes(autoTrackDeviceAttributes);
-
-            // get backgroundQueueMinNumberOfTasks
-            int backgroundQueueMinNumberOfTasks = 10;
-            if (destinationConfig.containsKey(BACKGROUND_QUEUE_MIN_NUMBER_OF_TASKS)) {
-                String backgroundQueueMinNumberOfTasksStr = (String) destinationConfig.get(
-                        BACKGROUND_QUEUE_MIN_NUMBER_OF_TASKS);
-                if (!TextUtils.isEmpty(backgroundQueueMinNumberOfTasksStr)) {
-                    try {
-                        backgroundQueueMinNumberOfTasks = Integer.parseInt(
-                                backgroundQueueMinNumberOfTasksStr);
-                    } catch (NumberFormatException e) {
-                        RudderLogger.logWarn("Invalid Number format. Reverting to default value");
-                    }
-                }
-            }
-            builder.setBackgroundQueueMinNumberOfTasks(backgroundQueueMinNumberOfTasks);
-
-            // get backgroundQueueSecondsDelay
-            double backgroundQueueSecondsDelay = 30.0;
-            if (destinationConfig.containsKey(BACKGROUND_QUEUE_SECONDS_DELAY)) {
-                String backgroundQueueSecondsDelayStr = (String) destinationConfig.get(
-                        BACKGROUND_QUEUE_SECONDS_DELAY);
-                if (!TextUtils.isEmpty(backgroundQueueSecondsDelayStr)) {
-                    try {
-                        backgroundQueueSecondsDelay = Double.parseDouble(
-                                backgroundQueueSecondsDelayStr);
-                    } catch (NumberFormatException e) {
-                        RudderLogger.logWarn("Invalid Number format. Reverting to default value");
-                    }
-                }
-            }
-            builder.setBackgroundQueueSecondsDelay(backgroundQueueSecondsDelay);
-
-            // auto record screen views
-            builder.autoTrackScreenViews(rudderConfig.isRecordScreenViews());
+            this.customerIOBuilder.autoTrackDeviceAttributes(autoTrackDeviceAttributes);
 
             // log level
-            builder.setLogLevel(mapLogLevel(rudderConfig.getLogLevel()));
+            this.customerIOBuilder.logLevel(mapLogLevel(rudderConfig.getLogLevel()));
 
+            // auto record screen views
+            this.customerIOBuilder.autoTrackActivityScreens(rudderConfig.isRecordScreenViews());
 
-            this.customerIO = builder.build();
-            RudderLogger.logInfo("Configured Customer IO + Rudder integration and initialized customerio.");
+            // do not build. let the developer build after adding the fcm and in-app module
+
+            RudderLogger.logInfo("Configured Customer IO + Rudder integration builder created. initialize customer.io by calling builder.build()");
         }
     }
 
@@ -154,9 +115,9 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIO> 
 
         Map<String, Object> properties = element.getProperties();
         if (properties == null) {
-            this.customerIO.track(event);
+            CustomerIO.instance().track(event);
         } else {
-            this.customerIO.track(event, properties);
+            CustomerIO.instance().track(event, properties);
         }
     }
 
@@ -166,9 +127,9 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIO> 
         Map<String, Object> traits = element.getTraits();
 
         if (!TextUtils.isEmpty(userId)) {
-            this.customerIO.identify(userId, traits);
+            CustomerIO.instance().identify(userId, traits);
         } else if (TextUtils.isEmpty(anonymousId)) {
-            this.customerIO.identify(anonymousId, traits);
+            CustomerIO.instance().identify(anonymousId, traits);
         }
     }
 
@@ -180,9 +141,9 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIO> 
 
         Map<String, Object> properties = element.getProperties();
         if (properties == null) {
-            this.customerIO.screen(name);
+            CustomerIO.instance().screen(name);
         } else {
-            this.customerIO.screen(name, properties);
+            CustomerIO.instance().screen(name, properties);
         }
     }
 
@@ -194,40 +155,48 @@ public class CustomerIOIntegrationFactory extends RudderIntegration<CustomerIO> 
 
     @Override
     public void reset() {
-        this.customerIO.clearIdentify();
+        CustomerIO.instance().clearIdentify();
     }
 
     @Override
     public void dump(@NonNull RudderMessage element) {
-        if (customerIO != null) {
-            if (element.getType() != null) {
-                switch (element.getType()) {
-                    case MessageType.TRACK:
-                        processTrackEvent(element);
-                        break;
-                    case MessageType.IDENTIFY:
-                        processIdentifyEvent(element);
-                        break;
-                    case MessageType.SCREEN:
-                        processScreenEvent(element);
-                        break;
-                    case MessageType.ALIAS:
-                    case MessageType.GROUP:
-                        RudderLogger.logWarn("CustomerIOIntegrationFactory: MessageType is not supported");
-                        break;
-                    default:
-                        RudderLogger.logWarn("CustomerIOIntegrationFactory: MessageType is not specified");
-                        break;
-                }
+        if (element.getType() != null) {
+            switch (element.getType()) {
+                case MessageType.TRACK:
+                    processTrackEvent(element);
+                    break;
+                case MessageType.IDENTIFY:
+                    processIdentifyEvent(element);
+                    break;
+                case MessageType.SCREEN:
+                    processScreenEvent(element);
+                    break;
+                case MessageType.ALIAS:
+                case MessageType.GROUP:
+                    RudderLogger.logWarn("CustomerIOIntegrationFactory: MessageType is not supported");
+                    break;
+                default:
+                    RudderLogger.logWarn("CustomerIOIntegrationFactory: MessageType is not specified");
+                    break;
             }
-        } else {
-            RudderLogger.logWarn("CustomerIOIntegrationFactory: CustomerIO is not initialized");
         }
     }
 
     @Override
-    public CustomerIO getUnderlyingInstance() {
-        return customerIO;
+    public CustomerIOIntegrationFactory getUnderlyingInstance() {
+        return this;
+    }
+
+    public String getSiteId() {
+        return this.siteId;
+    }
+
+    public CustomerIOBuilder getBuilder() {
+        return this.customerIOBuilder;
+    }
+
+    public Region getRegion() {
+        return this.region;
     }
 
     private CioLogLevel mapLogLevel(int logLevel) {
