@@ -11,7 +11,7 @@ More information on RudderStack can be found [here](https://github.com/rudderlab
 2. Add the dependency under ```dependencies```
 ```
 implementation 'com.rudderstack.android.sdk:core:[1.0,2.0)'
-implementation 'com.rudderstack.android.integration:customerio:1.0.1'
+implementation 'com.rudderstack.android.integration:customerio:1.1.0'
 ```
 
 3. Add required permissions to ```AndroidManifest.xml```
@@ -32,6 +32,34 @@ val rudderClient: RudderClient = RudderClient.getInstance(
         .withFactory(CustomerIOIntegrationFactory.FACTORY)
         .build()
 )
+```
+
+## Add FCM and IN-APP module
+1. Add the dependency under ```dependencies```
+```
+implementation "io.customer.android:messaging-push-fcm:4.2.0"
+implementation "io.customer.android:messaging-in-app:4.2.0"
+```
+
+2. Add the next section right after the initialization of the SDK
+```
+rudderClient.onIntegrationReady("Customer IO") {
+    val siteId = (it as CustomerIOIntegrationFactory).siteId
+    val builder = it.builder
+    val region = it.region
+
+    builder.addCustomerIOModule(ModuleMessagingPushFCM())
+    builder.addCustomerIOModule(
+        ModuleMessagingInApp(
+            config = MessagingInAppModuleConfig.Builder(
+                siteId,
+                region
+            ).build()
+        )
+    )
+
+    builder.build() // important and don't miss
+}
 ```
 
 ## Send Events

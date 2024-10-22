@@ -29,7 +29,7 @@ dependencies {
     // RudderStack SDK
     compileOnly 'com.rudderstack.android.sdk:core:[1.12,2.0)'
     // Customer IO SDK
-    implementation 'io.customer.android:tracking:3.10.0'
+    implementation "io.customer.android:datapipelines:4.2.0"
 }
 
 
