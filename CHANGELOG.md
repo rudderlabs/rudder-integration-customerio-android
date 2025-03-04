@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/rudderlabs/rudder-integration-customerio-android/compare/v1.1.0...v1.2.0) (2025-03-04)
+
+
+### Features
+
+* bump the customerIO SDK to v4.5.3 ([1d6c615](https://github.com/rudderlabs/rudder-integration-customerio-android/commit/1d6c6157edbf5b55d99fb100b59ceb86302f4e9e))
+
 ## 1.1.0 (2024-10-22)
 
 
