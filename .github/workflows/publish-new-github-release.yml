@@ -17,7 +17,7 @@ jobs:
       contents: read  # default read for GITHUB_TOKEN
     name: Publish new release
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' }} || (startsWith(github.event.pull_request.head.ref, 'release/') && github.event.pull_request.merged == true) # only merged pull requests must trigger this job
+    if: github.event_name == 'workflow_dispatch' || (startsWith(github.event.pull_request.head.ref, 'release/') && github.event.pull_request.merged == true) # only merged pull requests must trigger this job
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@f4a75cfd619ee5ce8d5b864b0d183aff3c69b55a # v2.13.1
