@@ -4,11 +4,11 @@ on:
   release:
     types: [created]
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   deploy-tag:
+    permissions: {} # no step calls the GitHub API
     name: Notify Slack
     runs-on: ubuntu-latest
     steps:

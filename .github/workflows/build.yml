@@ -8,8 +8,7 @@ on:
     types: [ 'opened', 'reopened', 'edited', 'synchronize' ]
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   cancel_previous:
@@ -28,6 +27,8 @@ jobs:
           workflow_id: ${{ github.event.workflow.id }}
 
   customerio-test:
+    permissions:
+      contents: read # actions/checkout
     needs: cancel_previous
     runs-on: ubuntu-latest
 
@@ -39,6 +40,8 @@ jobs:
 
       - name: Checkout source branch
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-java@17f84c3641ba7b8f6deff6309fc4c864478f5d62 # v3.14.1
         with:
